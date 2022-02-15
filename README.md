@@ -1,17 +1,15 @@
-# Protein Onboarding Bot 🤖
-
->it's probably nothing
+# RADAR portal 🤖
 
 ## TL;DR
 
-A custom built bot for Protein to assist with onboarding new members.  ✨
+An onboarding bot that checks an airtable whitelist for user's discord handle and then gives them a role  ✨
 
 ## How it Works
 
-1. Somone submits a request to join the community
-2. The request is posted in `member-applications`
-3. Community members respond to the request via: 🟢 or 🔴
-4. The response is recorded in airtable for community managers
+1. A user joins RADAR and visits the `#radar-portal` channel
+2. They press the bot's button to check the whitelist
+3. If they are on the list, the role is added and they gain access to the server
+4. Otherwise, they are informed of further steps
 
 ## Setup
 
