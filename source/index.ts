@@ -121,6 +121,7 @@ client.on("interactionCreate", async (interaction) => {
         ephemeral: true,
       });
     } else {
+      console.log('Not Accepted');
       const denyButton = new MessageActionRow().addComponents(
         new MessageButton()
           .setLabel("Make sure you’ve applied here")
