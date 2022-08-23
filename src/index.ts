@@ -1,7 +1,7 @@
 // ----------------------------------------------------------------------------------//
 // RADAR Portal
-// Whitelist onboarding bot (( BETA v0.1.0 ))
-// Fiigmnt | Febuary 9, 2022 | Updated: Febuary 14, 2022
+// Whitelist onboarding bot (( BETA v0.1.1 ))
+// Fiigmnt | Febuary 9, 2022 | Updated: August 23, 2022
 // ----------------------------------------------------------------------------------//
 
 import {
@@ -16,6 +16,9 @@ import Airtable from "airtable";
 import dotenv from "dotenv";
 
 dotenv.config();
+
+// This should match the one in the airtable exactly
+const tagColumnName = "Discord (don’t forget to include the # number. E.g Futurist#1234)"
 
 const { DISCORD_TOKEN, AIRTABLE_TOKEN, AIRTABLE_TABLE_KEY, ROLE_ID } =
   process.env;
@@ -43,10 +46,10 @@ const isUserAccepted = async (i: Interaction) => {
   console.log(tag);
 
   try {
-    // find record in airtable with the email
+    // find record in airtable with the email, and make sure they were approved by an admin
     const result = await table
       .select({
-        filterByFormula: `({Discord (don’t forget to include the # number. E.g Futurist#1234)} = "${tag}")`,
+        filterByFormula: `AND({${tagColumnName}} = "${tag}", {Approved} = true)`,
       })
       .firstPage();
 
