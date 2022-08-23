@@ -17,7 +17,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const { DISCORD_TOKEN, AIRTABLE_TOKEN, AIRTABLE_TABLE_KEY, ROLE_ID } = process.env;
+const { DISCORD_TOKEN, AIRTABLE_TOKEN, AIRTABLE_TABLE_KEY, ROLE_ID } =
+  process.env;
 
 const base = new Airtable({ apiKey: AIRTABLE_TOKEN }).base(
   AIRTABLE_TABLE_KEY || ""
@@ -33,21 +34,19 @@ const client = new Client({
   partials: ["MESSAGE", "CHANNEL", "REACTION"],
 });
 
-client.once("ready", () => {
-  console.log("Bot is ready");
-});
+client.once("ready", () => console.log("Bot is ready"));
 
-const isUserAccepted = async (interaction: Interaction) => {
-  const username = `${interaction.user.username}#${interaction.user.discriminator}`;
+const isUserAccepted = async (i: Interaction) => {
+  const tag = i.user.tag;
 
   console.log("-- USER --");
-  console.log(username);
+  console.log(tag);
 
   try {
-    // // find record in airtable with the email
+    // find record in airtable with the email
     const result = await table
       .select({
-        filterByFormula: `({Discord (don’t forget to include the # number. E.g Futurist#1234)} = "${username}")`,
+        filterByFormula: `({Discord (don’t forget to include the # number. E.g Futurist#1234)} = "${tag}")`,
       })
       .firstPage();
 
@@ -95,42 +94,40 @@ client.on("guildCreate", async (guild) => {
 });
 
 // read button interactions
-client.on("interactionCreate", async (interaction) => {
-  if (!interaction.isButton()) return;
+client.on("interactionCreate", async (i) => {
+  if (!i.isButton()) return;
 
   try {
     // check to see if they're in the waitlist
     if (
-      interaction.customId === "join" &&
-      (await isUserAccepted(interaction))
+      i.customId === "join" &&
+      (await isUserAccepted(i))
     ) {
-      let role = interaction.guild?.roles.cache.find(
-        (r) => r.id === ROLE_ID
-      );
+      let role = i.guild?.roles.cache.find((r) => r.id === ROLE_ID);
 
       if (role) {
-        const member = interaction.guild?.members.cache.find(
-          (member) => member.id === interaction.user.id
+        const member = i.guild?.members.cache.find(
+          (member) => member.id === i.user.id
         );
 
         if (member) member.roles.add(role);
       }
 
-      await interaction.reply({
-        content: `Welcome to the future of futures ${interaction.user.username}`,
+      await i.reply({
+        content: `Welcome to the future of futures ${i.user.username}`,
         ephemeral: true,
       });
     } else {
-      console.log('Not Accepted');
+      console.log("Not Accepted");
       const denyButton = new MessageActionRow().addComponents(
         new MessageButton()
           .setLabel("Make sure you’ve applied here")
           .setStyle("LINK")
           .setURL("https://airtable.com/shrFKUzeNpJoDU0x9")
       );
-      await interaction.reply({
+      await i.reply({
         content:
-          "Sorry, we can’t find you on the list.\nIs this an error? Reach out via the #help channel.",
+          "Sorry, we can’t find you on the list.\nIs this an error? Reach out via the <#935863986522558494> channel.",
         ephemeral: true,
         components: [denyButton],
       });
