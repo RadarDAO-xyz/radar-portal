@@ -8,7 +8,7 @@ An onboarding bot that checks an airtable whitelist for user's discord handle an
 
 1. A user joins RADAR and visits the `#radar-portal` channel
 2. They press the bot's button to check the whitelist
-3. If they are on the list, the role is added and they gain access to the server
+3. If they are on the list and they have been approved, the role is added and they gain access to the server
 4. Otherwise, they are informed of further steps
 
 ## Setup

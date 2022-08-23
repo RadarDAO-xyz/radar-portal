@@ -1,25 +1,31 @@
 {
   "name": "radar-portal",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "RADAR Portal - onboarding bot",
-  "main": "index.js",
+  "main": "dist/index.js",
   "engines": {
     "node": "16.x"
   },
   "author": "fiigmnt",
   "license": "MIT",
   "scripts": {
-    "dev": "npx ts-node source/index.ts",
-    "build": "npx tsc",
-    "start": "npx tsc && node ./build/index.js"
+    "postinstall": "tsc",
+    "start": "node dist/index.js"
   },
   "devDependencies": {
-    "@types/node": "^17.0.8",
-    "typescript": "^4.5.4"
+    "@types/node": "^18.7.11",
+    "typescript": "^4.7.4"
   },
   "dependencies": {
-    "airtable": "^0.11.1",
-    "discord.js": "^13.3.1",
-    "dotenv": "^15.0.0"
-  }
+    "airtable": "^0.11.4",
+    "discord.js": "^13.10.3",
+    "dotenv": "^16.0.1"
+  },
+  "contributors": [
+    {
+      "name": "mrTomatolegit",
+      "email": "mrtomatolegit@gmail.com",
+      "url": "https://github.com/mrTomatolegit"
+    }
+  ]
 }
