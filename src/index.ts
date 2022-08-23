@@ -49,7 +49,7 @@ const isUserAccepted = async (i: Interaction) => {
     // find record in airtable with the email, and make sure they were approved by an admin
     const result = await table
       .select({
-        filterByFormula: `AND({${tagColumnName}} = "${tag}", {Approved} = true)`,
+        filterByFormula: `AND({${tagColumnName}} = "${tag}", {Approved} = TRUE())`,
       })
       .firstPage();
 
