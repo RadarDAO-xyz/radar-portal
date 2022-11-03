@@ -40,7 +40,7 @@ const client = new Client({
 client.once("ready", () => console.log("Bot is ready"));
 
 const isUserAccepted = async (i: Interaction) => {
-  const tag = i.user.tag;
+  const tag = i.user.tag.toLowerCase();
 
   console.log("-- USER --");
   console.log(tag);
@@ -49,7 +49,7 @@ const isUserAccepted = async (i: Interaction) => {
     // find record in airtable with the email, and make sure they were approved by an admin
     const result = await table
       .select({
-        filterByFormula: `AND({${tagColumnName}} = "${tag}", {Approved} = TRUE())`,
+        filterByFormula: `AND(LOWER({${tagColumnName}}) = "${tag}", {Approved} = TRUE())`,
       })
       .firstPage();
 
